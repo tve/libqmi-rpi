@@ -9,6 +9,9 @@ IMG=tvoneicken/sensorgnome-dockcross:armv7-rpi-bookworm-main
 docker run $IMG >sensorgnome-dockcross
 chmod +x sensorgnome-dockcross
 
+# Github runners don't have pkg-config installed
+sudo apt install -y pkg-config
+
 echo "Cross-compiling and installing"
 rm -rf packages
 mkdir -p packages
