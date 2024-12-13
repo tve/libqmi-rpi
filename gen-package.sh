@@ -11,8 +11,7 @@ chmod +x sensorgnome-dockcross
 
 # Github runners don't have pkg-config installed
 echo pkgconfig is at $(which pkgconfig)
-sudo apt info pkg-config pkgconfig
-exit 1
+echo pkgconf is at $(which pkgconf)
 
 echo "Cross-compiling and installing"
 rm -rf packages

@@ -40,8 +40,15 @@ ls /usr/xcc/armv7-unknown-linux-gnueabi/bin
 # need to disable tests -- the github runner can't run the armhf executables
 export DEB_BUILD_OPTIONS=nocheck
 #
-echo pkgconfig: $(which pkgconfig) # to double-check...
-export PKG_CONFIG=/usr/bin/pkgconfig
+if [[ -f /usr/bin/pkgconfig ]]; then
+  # arch linux
+  echo pkgconfig: $(which pkgconfig) # to double-check...
+  export PKG_CONFIG=/usr/bin/pkgconfig
+else
+  # ubuntu runner / debian
+  echo pkgconf: $(which pkgconf) # to double-check...
+  export PKG_CONFIG=/usr/bin/pkgconf
+fi
 echo dpkg-buildpackage -us -uc -nc -d --target-arch armhf -a armhf --target-type armv7-unknown-linux-gnueabi
 bash -i
 #
