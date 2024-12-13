@@ -10,8 +10,7 @@ docker run $IMG >sensorgnome-dockcross
 chmod +x sensorgnome-dockcross
 
 # Github runners don't have pkg-config installed
-sudo apt install -y pkg-config
-which pkgconfig
+echo pkgconfig is at $(which pkgconfig)
 
 echo "Cross-compiling and installing"
 rm -rf packages
