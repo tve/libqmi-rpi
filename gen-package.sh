@@ -15,10 +15,11 @@ docker pull $PIMOD_IMAGE
 
 if ! [[ -f /tmp/images/$TEMP_IMAGE ]]; then
     if ! [[ -f /tmp/images/$OS_IMAGE ]]; then
-        ( cd /tmp/images;
-        echo "Downloading $OS_URL";
-        wget -q $OS_URL;
-        xz -d $OS_XZ
+        ( mkdir -p /tmp/images
+          cd /tmp/images
+          echo "Downloading $OS_URL"
+          wget -q $OS_URL
+          xz -d $OS_XZ
         )
     fi
     echo "*** OS Image:" $(ls -h /tmp/images/$OS_IMAGE)
