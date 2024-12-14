@@ -55,9 +55,11 @@ FROM /images/$IMG
 TO /images/discard.img
 
 WORKDIR /root
-INSTALL build-$NAME.sh /root/build-$NAME.sh
+INSTALL build-libqmi-1.34.sh /root/build-libqmi-1.34.sh
+RUN ./build-libqmi-1.34.sh
+RUN pwd
 RUN ls
-RUN ./build-$NAME.sh
+EXTRACT /root/packages packages
 EOF
 
 docker run --rm --privileged \
