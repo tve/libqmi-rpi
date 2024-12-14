@@ -1,0 +1,4 @@
+*.pifile
+*dockcross*
+*.dsc
+.bash_history
