@@ -13,17 +13,16 @@ TYPE=armv7-rpi-bookworm
 # as opposed to later in the midst of something else
 docker pull $PIMOD_IMAGE
 
-if ! [[ -f /tmp/images/$OS_IMAGE ]]; then
-    ( mkdir -p /tmp/images; cd /tmp/images;
-      echo "*** Downloading $OS_URL";
-      wget -q $OS_URL;
-      xz -d $OS_XZ
-    )
-    date
-fi
-echo "*** OS Image:" $(ls -h /tmp/images/$OS_IMAGE)
-
 if ! [[ -f /tmp/images/$TEMP_IMAGE ]]; then
+    if ! [[ -f /tmp/images/$OS_IMAGE ]]; then
+        ( cd /tmp;
+        echo "Downloading $OS_URL";
+        wget -q $OS_URL;
+        xz -d $OS_XZ
+        )
+    fi
+    echo "*** OS Image:" $(ls -h /tmp/images/$OS_IMAGE)
+
     echo "*** Building temp image with dependencies"
     cat >$NAME-depend.pifile <<"EOF"
     FROM /images/$IMAGE_IMG
@@ -55,8 +54,8 @@ FROM /images/$IMG
 TO /images/discard.img
 
 WORKDIR /root
-INSTALL build-libqmi-1.34.sh /root/build-libqmi-1.34.sh
-RUN ./build-libqmi-1.34.sh
+INSTALL build-$NAME.sh /root/build-$NAME.sh
+RUN ./build-$NAME.sh
 RUN pwd
 RUN ls
 EXTRACT /root/packages packages
