@@ -14,11 +14,12 @@ TYPE=armv7-rpi-bookworm
 docker pull $PIMOD_IMAGE
 
 if ! [[ -f /tmp/images/$OS_IMAGE ]]; then
-    ( cd /tmp;
-      echo "Downloading $OS_URL";
+    ( mkdir -p /tmp/images; cd /tmp/images;
+      echo "*** Downloading $OS_URL";
       wget -q $OS_URL;
       xz -d $OS_XZ
     )
+    date
 fi
 echo "*** OS Image:" $(ls -h /tmp/images/$OS_IMAGE)
 
@@ -48,6 +49,7 @@ else
 fi
 
 echo "*** Starting build"
+date
 cat >$NAME-build.pifile <<"EOF"
 FROM /images/$IMG
 TO /images/discard.img
